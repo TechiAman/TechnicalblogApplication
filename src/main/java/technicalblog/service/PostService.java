@@ -22,6 +22,7 @@ public class PostService {
 
     public List<Post> getAllPosts(){
 
+
         return this.postRepository.getAllPosts();
     }
 
@@ -31,9 +32,18 @@ public class PostService {
 
     }
 
+    public Post getPost(Integer postId) {
+        return this.postRepository.getPost(postId);
+    }
+
     public void createPost(Post post){
         post.setDate(new Date());
         this.postRepository.createPost(post);
         System.out.println("New Post created : " + post);
+    }
+
+    public void updatePost(Post updatedPost) {
+        updatedPost.setDate(new Date());
+        this.postRepository.updatePost(updatedPost);
     }
 }

@@ -43,4 +43,22 @@ public class PostRepository {
         return newPost;
     }
 
+    public Post getPost(Integer postId) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        return em.find(Post.class, postId);
+    }
+
+    public void updatePost(Post updatedPost) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+
+        try {
+            transaction.begin();
+            em.merge(updatedPost);
+            transaction.commit();
+        }catch(Exception e) {
+            transaction.rollback();
+        }
+    }
+
 }
