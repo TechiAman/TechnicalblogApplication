@@ -46,4 +46,8 @@ public class PostService {
         updatedPost.setDate(new Date());
         this.postRepository.updatePost(updatedPost);
     }
+
+    public void deletePost(Integer postId){
+        this.postRepository.deletePost(postId);
+    }
 }

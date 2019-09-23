@@ -51,7 +51,8 @@ public class PostController {
     }
 
     @RequestMapping(value = "/deletePost", method = RequestMethod.DELETE)
-    public String deletePostOnSubmit(@RequestParam(name="postId") Long postId) {
+    public String deletePostOnSubmit(@RequestParam(name="postId") Integer postId) {
+        this.postService.deletePost(postId);
         return "redirect:/posts";
     }
 }
