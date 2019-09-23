@@ -9,6 +9,7 @@ import technicalblog.model.Post;
 import technicalblog.service.PostService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class PostController {
@@ -18,9 +19,7 @@ public class PostController {
 
     @RequestMapping("posts")
     public String getUserPosts(Model model) {
-        ArrayList<Post> posts = new ArrayList<>();
-        Post latestPost = postService.getOnePost();
-        posts.add(latestPost);
+        List<Post> posts = this.postService.getAllPosts();
         model.addAttribute("posts", posts);
         return "posts";
     }
