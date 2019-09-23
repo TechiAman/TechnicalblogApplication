@@ -3,6 +3,7 @@ package technicalblog.service;
 import org.springframework.stereotype.Service;
 import technicalblog.model.Post;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -10,7 +11,8 @@ import java.util.Date;
 public class PostService {
 
     public ArrayList<Post> getAllPosts(){
-        Post post = new Post();
+        ArrayList<Post> posts= new ArrayList<>();
+        /*Post post = new Post();
         post.setTitle("Post 1");
         post.setBody("Post Body 1");
         post.setDate(new Date());
@@ -25,23 +27,77 @@ public class PostService {
         post3.setBody("Post Body 3");
         post3.setDate(new Date());
 
-        ArrayList<Post> posts= new ArrayList<>();
         posts.add(post);
         posts.add(post2);
-        posts.add(post3);
+        posts.add(post3);*/
 
+        Connection connection = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/technicalblog","postgres","trak@123");
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM posts");
+            while(rs.next()){
+                Post post = new Post();
+                post.setTitle(rs.getString("title"));
+                post.setBody(rs.getString("body"));
+                posts.add(post);
+            }
+
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return posts;
     }
 
     public ArrayList<Post> getOnePost() {
         ArrayList<Post> posts = new ArrayList<>();
 
-        Post post1 = new Post();
+       /* Post post1 = new Post();
         post1.setTitle("This is your Post");
         post1.setBody("This is your Post. It has some valid content");
         post1.setDate(new Date());
         posts.add(post1);
+*/
+        Connection connection = null;
 
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/technicalblog","postgres","trak@123");
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM posts WHERE id=4");
+            while(rs.next()){
+                Post post = new Post();
+                post.setTitle(rs.getString("title"));
+                post.setBody(rs.getString("body"));
+                posts.add(post);
+            }
+
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return posts;
 
     }
