@@ -32,6 +32,7 @@ public class PostService {
     }
 
     public void createPost(Post post){
-
+        this.postRepository.createPost(post);
+        System.out.println("New Post created : " + post);
     }
 }
